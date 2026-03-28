@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selecionados - Cursos de Idiomas 2026</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+body { font-family: 'Poppins', sans-serif; }
+</style>
+</head>
+<body class="bg-gradient-to-br from-green-50 to-white">
+
+<header class="bg-gradient-to-r from-green-700 to-green-600 text-white p-6 shadow-lg">
+  <h1 class="text-3xl font-bold">Escola Estadual Dr. João Leite de Barros</h1>
+  <p class="text-green-100">Cursos de Idiomas - Inglês e Espanhol</p>
+</header>
+
+<div class="bg-yellow-100 text-center p-4 font-bold text-yellow-800 text-lg">
+📅 MATRÍCULAS: 27 de março a 01 de abril
+</div>
+
+<nav class="flex gap-2 p-4 bg-white shadow sticky top-0">
+  <button onclick="showTab('consulta')" class="tab-btn">🔍 Consulta</button>
+  <button onclick="showTab('lista')" class="tab-btn">📋 Lista</button>
+  <button onclick="showTab('docs')" class="tab-btn">📄 Documentos</button>
+</nav>
+
+<main class="p-6 max-w-6xl mx-auto">
+
+<section id="consulta">
+  <h2 class="text-2xl font-bold mb-4">Consultar Resultado</h2>
+  <input id="busca" placeholder="Digite nome ou SGDE" class="w-full p-4 border-2 rounded-xl mb-4" onkeyup="buscar()">
+  <div id="resultado"></div>
+</section>
+
+<section id="lista" class="hidden">
+  <h2 class="text-2xl font-bold mb-4">Lista de Selecionados</h2>
+
+  <div class="flex gap-2 mb-4">
+    <button onclick="filtrar('todos')" class="filtro">Todos</button>
+    <button onclick="filtrar('Inglês')" class="filtro">Inglês</button>
+    <button onclick="filtrar('Espanhol')" class="filtro">Espanhol</button>
+  </div>
+
+  <table class="w-full border rounded-xl overflow-hidden">
+    <thead class="bg-green-200">
+      <tr>
+        <th class="p-2">SGDE</th>
+        <th class="p-2">Nome</th>
+        <th class="p-2">Curso</th>
+      </tr>
+    </thead>
+    <tbody id="tabela"></tbody>
+  </table>
+</section>
+
+<section id="docs" class="hidden">
+  <h2 class="text-2xl font-bold mb-4">Documentos</h2>
+  <ul class="grid gap-3">
+    <li class="p-3 bg-green-50 rounded">Certidão de Nascimento ou Casamento</li>
+    <li class="p-3 bg-green-50 rounded">CPF</li>
+    <li class="p-3 bg-green-50 rounded">RG (maiores de 18)</li>
+    <li class="p-3 bg-green-50 rounded">Certificado + Histórico</li>
+    <li class="p-3 bg-green-50 rounded">Carteira de Vacinação</li>
+    <li class="p-3 bg-green-50 rounded">Comprovante de Residência</li>
+    <li class="p-3 bg-green-50 rounded">Cartão SUS</li>
+    <li class="p-3 bg-amber-100 rounded">Declaração de Vacinação (DVA)</li>
+  </ul>
+</section>
+
+</main>
+
+<footer class="bg-green-800 text-white text-center p-6 mt-10">
+  Escola Estadual Dr. João Leite de Barros<br>
+  Processo Seletivo 2026<br>
+  Desenvolvido por Wellington Oliveira
+</footer>
+
+<script>
+const alunos = window.alunos || [];
+
+function showTab(tab){
+  document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
+  document.getElementById(tab).classList.remove('hidden');
+}
+
+function buscar(){
+  const termo = document.getElementById('busca').value.toLowerCase();
+  const res = alunos.filter(a=> a.nome.toLowerCase().includes(termo) || a.sgde.includes(termo));
+
+  document.getElementById('resultado').innerHTML = res.map(a=>`
+    <div class='p-6 bg-green-600 text-white rounded-xl shadow mb-3'>
+      <h3 class='text-xl font-bold'>🎉 VOCÊ FOI SELECIONADO</h3>
+      <p class='mt-2'>${a.nome}</p>
+      <p>SGDE: ${a.sgde}</p>
+      <p class='font-semibold'>Curso: ${a.curso}</p>
+    </div>
+  `).join('');
+}
+
+function carregar(lista){
+  document.getElementById('tabela').innerHTML = lista.map(a=>`
+    <tr>
+      <td class='border p-2'>${a.sgde}</td>
+      <td class='border p-2'>${a.nome}</td>
+      <td class='border p-2 font-semibold'>${a.curso}</td>
+    </tr>
+  `).join('');
+}
+
+function filtrar(tipo){
+  if(tipo === 'todos') carregar(alunos);
+  else carregar(alunos.filter(a=>a.curso === tipo));
+}
+
+carregar(alunos);
+</script>
+
+</body>
+</html>
