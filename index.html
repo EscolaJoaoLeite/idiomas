@@ -1,15 +1,19 @@
+```html
 <!doctype html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Selecionados - Cursos de Idiomas 2026</title>
+
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
 body { font-family: 'Poppins', sans-serif; }
 </style>
 </head>
+
 <body class="bg-gradient-to-br from-green-50 to-white">
 
 <header class="bg-gradient-to-r from-green-700 to-green-600 text-white p-6 shadow-lg">
@@ -29,12 +33,14 @@ body { font-family: 'Poppins', sans-serif; }
 
 <main class="p-6 max-w-6xl mx-auto">
 
+<!-- CONSULTA -->
 <section id="consulta">
   <h2 class="text-2xl font-bold mb-4">Consultar Resultado</h2>
   <input id="busca" placeholder="Digite nome ou SGDE" class="w-full p-4 border-2 rounded-xl mb-4" onkeyup="buscar()">
   <div id="resultado"></div>
 </section>
 
+<!-- LISTA -->
 <section id="lista" class="hidden">
   <h2 class="text-2xl font-bold mb-4">Lista de Selecionados</h2>
 
@@ -43,6 +49,10 @@ body { font-family: 'Poppins', sans-serif; }
     <button onclick="filtrar('Inglês')" class="filtro">Inglês</button>
     <button onclick="filtrar('Espanhol')" class="filtro">Espanhol</button>
   </div>
+
+  <button onclick="imprimirLista()" class="bg-gray-800 text-white px-4 py-2 rounded mb-4">
+    🖨️ Imprimir Lista
+  </button>
 
   <table class="w-full border rounded-xl overflow-hidden">
     <thead class="bg-green-200">
@@ -56,6 +66,7 @@ body { font-family: 'Poppins', sans-serif; }
   </table>
 </section>
 
+<!-- DOCUMENTOS -->
 <section id="docs" class="hidden">
   <h2 class="text-2xl font-bold mb-4">Documentos</h2>
   <ul class="grid gap-3">
@@ -79,8 +90,89 @@ body { font-family: 'Poppins', sans-serif; }
 </footer>
 
 <script>
-const alunos = window.alunos || [];
 
+// BASE DE DADOS
+const alunos = [
+
+  // INGLÊS
+  { sgde:"1361892", nome:"ANA VITORIA DO CARMO DA SILVA", curso:"Inglês" },
+  { sgde:"175098", nome:"ANDREZA GUEDES PESSOA", curso:"Inglês" },
+  { sgde:"1276321", nome:"ARTURO PEDRO GARCIA CHOSGO", curso:"Inglês" },
+  { sgde:"1398845", nome:"BRENO BRANDÃO JUSTINIANO", curso:"Inglês" },
+  { sgde:"72041", nome:"BRUNA DE GODOY MACHADO", curso:"Inglês" },
+  { sgde:"1434654", nome:"CLEYTON ALVES DA SILVA", curso:"Inglês" },
+  { sgde:"1387919", nome:"DANNA VALENTINA ORTIZ ANEZ", curso:"Inglês" },
+  { sgde:"1256085", nome:"DIEGO AGUILAR DUTRA", curso:"Inglês" },
+  { sgde:"192686", nome:"EDIVANY CONCEIÇÃO OLIVEIRA", curso:"Inglês" },
+  { sgde:"1366781", nome:"EDUARDA MARTINS SELASCO", curso:"Inglês" },
+  { sgde:"449248", nome:"ELEINARA MARTINS DO NASCIMENTO", curso:"Inglês" },
+  { sgde:"1477543", nome:"ELERIANE DO CARMO ROCA RODRIGUES", curso:"Inglês" },
+  { sgde:"78913", nome:"ELISETE DA SILVA VARGAS", curso:"Inglês" },
+  { sgde:"1420425", nome:"GABRIEL AARON CASTRO ROCHA", curso:"Inglês" },
+  { sgde:"911109", nome:"GABRIELY ANTONIO FERNANDES MONTEIRO", curso:"Inglês" },
+  { sgde:"1482175", nome:"HELLEN CRISTINA DE OLIVEIRA PINHO", curso:"Inglês" },
+  { sgde:"1465345", nome:"JULIA TUCAN DIAS", curso:"Inglês" },
+  { sgde:"1482122", nome:"LAIDICEIA DOS SANTOS BRANDÃO JUSTINIANO", curso:"Inglês" },
+  { sgde:"1050826", nome:"LARISSA KARINI FERNANDES CARVALHO", curso:"Inglês" },
+  { sgde:"1481706", nome:"LEONARDO MORAES ALMIRON", curso:"Inglês" },
+  { sgde:"1426784", nome:"LUCAS VINICIUS PEREIRA FLORIANO", curso:"Inglês" },
+  { sgde:"752744", nome:"LUIS FELIPE NEVES DE OLIVEIRA", curso:"Inglês" },
+  { sgde:"1292689", nome:"LUIZ GUILHERME AURELIO SIGARINI", curso:"Inglês" },
+  { sgde:"1482136", nome:"MAYARA PINHO TUCAN", curso:"Inglês" },
+  { sgde:"1481834", nome:"MELQUISEDEQUE DA SILVA MORAES", curso:"Inglês" },
+  { sgde:"1392643", nome:"MIRCE CONCEIÇÃO DE OLIVEIRA", curso:"Inglês" },
+  { sgde:"158630", nome:"ORIANNA HELENA DE SOUZA COLMAN RODRIGUES", curso:"Inglês" },
+  { sgde:"158650", nome:"SÁVIA LOUIZA DA SILVA LOPES", curso:"Inglês" },
+  { sgde:"1424009", nome:"STEPHANY CAROLINE BEZERRA LEITE", curso:"Inglês" },
+  { sgde:"174866", nome:"SUSANNA SILVEIRA VARGAS", curso:"Inglês" },
+  { sgde:"680799", nome:"TATIANA CRISTINA SANTANA VIRUEZ", curso:"Inglês" },
+  { sgde:"1481921", nome:"THAILLA SANTOS DO ESPIRITO SANTO", curso:"Inglês" },
+  { sgde:"999536", nome:"VANESSA MONTEIRO DE JESUS", curso:"Inglês" },
+  { sgde:"990840", nome:"VINICIUS LACERDA DA SILVA OLIVEIRA", curso:"Inglês" },
+
+  // ESPANHOL
+  { sgde:"238045", nome:"ALINE APARECIDA MARTINS DA SILVA", curso:"Espanhol" },
+  { sgde:"1361306", nome:"ANA PAULA DE SOUZA BRITO", curso:"Espanhol" },
+  { sgde:"1285487", nome:"DARLAN JORGE MONTEIRO SILVA DE SOUZA", curso:"Espanhol" },
+  { sgde:"1481791", nome:"DIEGO ELIAS ZEFERINO PICOLOMINI", curso:"Espanhol" },
+  { sgde:"493243", nome:"EDILENE RHAYBEL BRAGA DE FRANÇA", curso:"Espanhol" },
+  { sgde:"1476120", nome:"ELIZABETH MANOEL DE SOUZA RIBEIRO", curso:"Espanhol" },
+  { sgde:"1476105", nome:"ELIZANGELA MANOEL DE SOUZA", curso:"Espanhol" },
+  { sgde:"1207912", nome:"EMILI DAYANE VIEIRA FIRME", curso:"Espanhol" },
+  { sgde:"851460", nome:"FABIANO BARBOSA PINTO", curso:"Espanhol" },
+  { sgde:"60064", nome:"FRANCIELLY VARGAS DE ALMEIDA", curso:"Espanhol" },
+  { sgde:"321563", nome:"GEANY MARA SILVA ALMEIDA", curso:"Espanhol" },
+  { sgde:"1481817", nome:"GLEICE ALVES BENEVIDES RISSATO", curso:"Espanhol" },
+  { sgde:"689984", nome:"IZABELLY VITÓRIA IBARRA KUKIEL", curso:"Espanhol" },
+  { sgde:"1118714", nome:"JOAQUIM NEPOMUCENO DE ALMEIDA NETO", curso:"Espanhol" },
+  { sgde:"1392266", nome:"JOCINEY VIEIRA DA CUNHA FERREIRA", curso:"Espanhol" },
+  { sgde:"1432617", nome:"JOSÉ FRANCISCO SIDRÃO", curso:"Espanhol" },
+  { sgde:"912216", nome:"KIARA MARIA DE SOUZA RODRIGUES", curso:"Espanhol" },
+  { sgde:"334250", nome:"KLEYDSON ALBERTO DE JESUS SOARES", curso:"Espanhol" },
+  { sgde:"476869", nome:"LAURA HELENA DA SILVA LEMOS", curso:"Espanhol" },
+  { sgde:"1171832", nome:"MARIA EDUARDA MACEDO VILLA", curso:"Espanhol" },
+  { sgde:"1454687", nome:"MAYZZA OCUDA HENRIQUE DE LIMA", curso:"Espanhol" },
+  { sgde:"1166254", nome:"NELLYEND MARGARIDO DE SOUZA", curso:"Espanhol" },
+  { sgde:"186753", nome:"RAQUEL MARIA DA CONCEIÇÃO", curso:"Espanhol" },
+  { sgde:"1481799", nome:"ROSALIA DA COSTA DE SOUZA", curso:"Espanhol" },
+  { sgde:"53486", nome:"ROSANA CASTRO DA SILVA", curso:"Espanhol" },
+  { sgde:"705764", nome:"ROSANGELA CHAVES", curso:"Espanhol" },
+  { sgde:"870168", nome:"ROSEMEIRE DA SILVA PEREIRA", curso:"Espanhol" },
+  { sgde:"705322", nome:"ROSILENE BRAGA", curso:"Espanhol" },
+  { sgde:"1316309", nome:"SAMARA GEOVANNA ALMEIDA VILALVA", curso:"Espanhol" },
+  { sgde:"424287", nome:"TAINA CONCEIÇÃO CARDOSO", curso:"Espanhol" },
+  { sgde:"1481856", nome:"TULUA DE CARATINGUI FERRÃO", curso:"Espanhol" },
+  { sgde:"1482228", nome:"VALDICE VARGAS SIQUEIRA", curso:"Espanhol" },
+  { sgde:"1482016", nome:"VALQUIRIA DE CASTRO GONÇALVES GOMES SOARES", curso:"Espanhol" },
+  { sgde:"783646", nome:"VITORIA CAROLINE DA SILVA MONTEIRO", curso:"Espanhol" },
+  { sgde:"1481922", nome:"WILTON DO ESPIRITO SANTO", curso:"Espanhol" },
+  { sgde:"1303901", nome:"YASMIN LUANE BRAGA PINHO", curso:"Espanhol" }
+];
+
+// ORDENAR
+alunos.sort((a, b) => a.nome.localeCompare(b.nome));
+
+// FUNÇÕES
 function showTab(tab){
   document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
   document.getElementById(tab).classList.remove('hidden');
@@ -91,7 +183,7 @@ function buscar(){
   const res = alunos.filter(a=> a.nome.toLowerCase().includes(termo) || a.sgde.includes(termo));
 
   document.getElementById('resultado').innerHTML = res.map(a=>`
-    <div class='p-6 bg-green-600 text-white rounded-xl shadow mb-3'>
+    <div class='p-6 ${a.curso === "Inglês" ? "bg-blue-600" : "bg-green-600"} text-white rounded-xl shadow mb-3'>
       <h3 class='text-xl font-bold'>🎉 VOCÊ FOI SELECIONADO</h3>
       <p class='mt-2'>${a.nome}</p>
       <p>SGDE: ${a.sgde}</p>
@@ -102,10 +194,12 @@ function buscar(){
 
 function carregar(lista){
   document.getElementById('tabela').innerHTML = lista.map(a=>`
-    <tr>
+    <tr class='${a.curso === "Inglês" ? "bg-blue-50" : "bg-green-50"}'>
       <td class='border p-2'>${a.sgde}</td>
       <td class='border p-2'>${a.nome}</td>
-      <td class='border p-2 font-semibold'>${a.curso}</td>
+      <td class='border p-2 font-semibold'>
+        ${a.curso === "Inglês" ? "🇺🇸 Inglês" : "🇪🇸 Espanhol"}
+      </td>
     </tr>
   `).join('');
 }
@@ -115,8 +209,15 @@ function filtrar(tipo){
   else carregar(alunos.filter(a=>a.curso === tipo));
 }
 
+function imprimirLista(){
+  window.print();
+}
+
+// INICIAR
 carregar(alunos);
+
 </script>
 
 </body>
 </html>
+```
