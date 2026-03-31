@@ -18,6 +18,7 @@ body { font-family: 'Poppins', sans-serif; }
 <header class="bg-green-700 text-white p-6 text-center">
   <h1 class="text-2xl font-bold">Consulta de Selecionados 2026</h1>
   <p>Cursos de Inglês e Espanhol</p>
+    <p>Escola Estadual Dr. João Leite de Barros</p>
 </header>
 
 <!-- ABAS -->
@@ -31,14 +32,14 @@ body { font-family: 'Poppins', sans-serif; }
 
 <!-- INGLÊS -->
 <section id="ingles">
-  <h2 class="text-xl font-bold mb-3 text-blue-700">Consulta - Inglês</h2>
+  <h2 class="text-xl font-bold mb-3 text-blue-700">Consulta - Curso de Qualificação Profissional em Inglês Aplicado aos Serviços Turístico</h2>
   <input id="buscaIngles" placeholder="Digite nome ou SGDE" class="w-full p-3 border rounded mb-4" onkeyup="buscarIngles()">
   <div id="resultadoIngles"></div>
 </section>
 
 <!-- ESPANHOL -->
 <section id="espanhol" class="hidden">
-  <h2 class="text-xl font-bold mb-3 text-green-700">Consulta - Espanhol</h2>
+  <h2 class="text-xl font-bold mb-3 text-green-700">Consulta - Curso de Qualificação Profissional em Espanhol Aplicado aos Serviços Turístico</h2>
   <input id="buscaEspanhol" placeholder="Digite nome ou SGDE" class="w-full p-3 border rounded mb-4" onkeyup="buscarEspanhol()">
   <div id="resultadoEspanhol"></div>
 </section>
@@ -157,14 +158,15 @@ function mensagemMatricula(nome, sgde){
       <p class='mt-2 font-semibold'>🎉 Você foi selecionado!</p>
       <p>📅 Prazo: até 31 de março</p>
       <p>📍 Realizar matrícula na secretaria da escola</p>
+      <p>⏰ Horário de atendimento da Secretaria Escolar: das 7h às 20h.</p>
     </div>
 
     <div class='bg-white p-4 rounded shadow text-sm'>
       <p class='font-bold text-red-600'>⚠️ Atenção!</p>
-      <p>Responsável deve comparecer para assinar o termo de matrícula.</p>
+      <p>Em caso de estudantes matriculados na nossa escola, o responsável deve comparecer na nossa secretaria escolar para assinar o termo de matricula. </p>
 
       <h3 class='font-bold mt-3 mb-2'>📄 Documentos Necessários</h3>
-      <ul class='list-disc ml-5'>
+      <ul class='list-disc ml-5'> 
         <li>Certidão de Nascimento ou Casamento</li>
         <li>CPF</li>
         <li>RG (maiores de 18)</li>
@@ -176,7 +178,7 @@ function mensagemMatricula(nome, sgde){
       </ul>
 
       <p class='mt-3 font-bold'>📍 Escola Estadual Dr. João Leite de Barros</p>
-      <p>⏰ 7h às 20h</p>
+      <p>⏰ Horário de atendimento da secretaria: 7h às 20h</p>
     </div>
   `;
 }
