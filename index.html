@@ -1,11 +1,10 @@
-```html
 <!doctype html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Consulta - Cursos de Idiomas 2026</title>
-  
+
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -18,7 +17,7 @@ body { font-family: 'Poppins', sans-serif; }
 
 <header class="bg-green-700 text-white p-6 text-center">
   <h1 class="text-2xl font-bold">Consulta de Selecionados 2026</h1>
-  <p>Curso de Qualificação Profissional em Espanhol ou Inglês Aplicado aos Serviços Turísticos</p>
+  <p>Cursos de Inglês e Espanhol</p>
 </header>
 
 <!-- ABAS -->
@@ -32,14 +31,14 @@ body { font-family: 'Poppins', sans-serif; }
 
 <!-- INGLÊS -->
 <section id="ingles">
-  <h2 class="text-xl font-bold mb-3 text-blue-700">Consulta - Curso de Qualificação Profissional em Inglês Aplicado aos Serviços Turísticos</h2>
+  <h2 class="text-xl font-bold mb-3 text-blue-700">Consulta - Inglês</h2>
   <input id="buscaIngles" placeholder="Digite nome ou SGDE" class="w-full p-3 border rounded mb-4" onkeyup="buscarIngles()">
   <div id="resultadoIngles"></div>
 </section>
 
 <!-- ESPANHOL -->
 <section id="espanhol" class="hidden">
-  <h2 class="text-xl font-bold mb-3 text-green-700">Consulta - Curso de Qualificação Profissional em Espanhol Aplicado aos Serviços Turísticos</h2>
+  <h2 class="text-xl font-bold mb-3 text-green-700">Consulta - Espanhol</h2>
   <input id="buscaEspanhol" placeholder="Digite nome ou SGDE" class="w-full p-3 border rounded mb-4" onkeyup="buscarEspanhol()">
   <div id="resultadoEspanhol"></div>
 </section>
@@ -63,10 +62,9 @@ body { font-family: 'Poppins', sans-serif; }
 
 <script>
 
-// BASE DE DADOS (RESUMIDA EXEMPLO - USE SUA LISTA COMPLETA)
+// BASE DE DADOS
 const alunos = [
 
-// INGLÊS
 { sgde:"1361892", nome:"ANA VITORIA DO CARMO DA SILVA", curso:"Inglês" },
 { sgde:"175098", nome:"ANDREZA GUEDES PESSOA", curso:"Inglês" },
 { sgde:"1276321", nome:"ARTURO PEDRO GARCIA CHOSGO", curso:"Inglês" },
@@ -102,7 +100,6 @@ const alunos = [
 { sgde:"999536", nome:"VANESSA MONTEIRO DE JESUS", curso:"Inglês" },
 { sgde:"990840", nome:"VINICIUS LACERDA DA SILVA OLIVEIRA", curso:"Inglês" },
 
-// ESPANHOL
 { sgde:"238045", nome:"ALINE APARECIDA MARTINS DA SILVA", curso:"Espanhol" },
 { sgde:"1361306", nome:"ANA PAULA DE SOUZA BRITO", curso:"Espanhol" },
 { sgde:"1285487", nome:"DARLAN JORGE MONTEIRO SILVA DE SOUZA", curso:"Espanhol" },
@@ -145,41 +142,59 @@ const alunos = [
 // ORDENAR
 alunos.sort((a, b) => a.nome.localeCompare(b.nome));
 
-// TROCAR ABAS
+// ABAS
 function showTab(tab){
   document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
   document.getElementById(tab).classList.remove('hidden');
 }
 
-// BUSCA INGLÊS
+// MENSAGEM
+function mensagemMatricula(nome, sgde){
+  return `
+    <div class='p-4 bg-green-700 text-white rounded mb-4'>
+      <p class='text-lg font-bold'>${nome}</p>
+      <p>SGDE: ${sgde}</p>
+      <p class='mt-2 font-semibold'>🎉 Você foi selecionado!</p>
+      <p>📅 Prazo: até 31 de março</p>
+      <p>📍 Realizar matrícula na secretaria da escola</p>
+    </div>
+
+    <div class='bg-white p-4 rounded shadow text-sm'>
+      <p class='font-bold text-red-600'>⚠️ Atenção!</p>
+      <p>Responsável deve comparecer para assinar o termo de matrícula.</p>
+
+      <h3 class='font-bold mt-3 mb-2'>📄 Documentos Necessários</h3>
+      <ul class='list-disc ml-5'>
+        <li>Certidão de Nascimento ou Casamento</li>
+        <li>CPF</li>
+        <li>RG (maiores de 18)</li>
+        <li>Certificado + Histórico</li>
+        <li>Carteira de Vacinação</li>
+        <li>Comprovante de Residência</li>
+        <li>Cartão SUS</li>
+        <li>DVA</li>
+      </ul>
+
+      <p class='mt-3 font-bold'>📍 Escola Estadual Dr. João Leite de Barros</p>
+      <p>⏰ 7h às 20h</p>
+    </div>
+  `;
+}
+
+// BUSCAS
 function buscarIngles(){
   const termo = document.getElementById('buscaIngles').value.toLowerCase();
-  const res = alunos.filter(a=> a.curso === "Inglês" &&
-    (a.nome.toLowerCase().includes(termo) || a.sgde.includes(termo))
-  );
-
-  document.getElementById('resultadoIngles').innerHTML = res.map(a=>`
-    <div class='p-4 bg-blue-600 text-white rounded mb-2'>
-      ${a.nome} - SGDE: ${a.sgde}
-    </div>
-  `).join('');
+  const res = alunos.filter(a=> a.curso==="Inglês" && (a.nome.toLowerCase().includes(termo)||a.sgde.includes(termo)));
+  document.getElementById('resultadoIngles').innerHTML = res.length ? res.map(a=>mensagemMatricula(a.nome,a.sgde)).join('') : "Nenhum encontrado";
 }
 
-// BUSCA ESPANHOL
 function buscarEspanhol(){
   const termo = document.getElementById('buscaEspanhol').value.toLowerCase();
-  const res = alunos.filter(a=> a.curso === "Espanhol" &&
-    (a.nome.toLowerCase().includes(termo) || a.sgde.includes(termo))
-  );
-
-  document.getElementById('resultadoEspanhol').innerHTML = res.map(a=>`
-    <div class='p-4 bg-green-600 text-white rounded mb-2'>
-      ${a.nome} - SGDE: ${a.sgde}
-    </div>
-  `).join('');
+  const res = alunos.filter(a=> a.curso==="Espanhol" && (a.nome.toLowerCase().includes(termo)||a.sgde.includes(termo)));
+  document.getElementById('resultadoEspanhol').innerHTML = res.length ? res.map(a=>mensagemMatricula(a.nome,a.sgde)).join('') : "Nenhum encontrado";
 }
 
-// LISTA GERAL
+// LISTA
 function carregar(){
   document.getElementById('tabela').innerHTML = alunos.map(a=>`
     <tr>
@@ -196,4 +211,3 @@ carregar();
 
 </body>
 </html>
-```
